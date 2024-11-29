@@ -28,3 +28,24 @@ exports.addDog = async (request, h) => {
         return h.response(err).code(500);
     }
 }
+
+// Funtion för att uppdatera hund 
+exports.updateDog = async (request, h) => {
+    try {
+        return await Dog.findByIdAndUpdate(request.params.id,
+            request.payload,
+            { new: true }
+        )
+    } catch (err) {
+        return h.response(err).code(500)
+    }
+}
+
+// Funktion för att ta bort hund 
+exports.deleteDog = async (request, h) => {
+    try {
+        return await Dog.findByIdAndDelete(request.params.id)
+    } catch (err) {
+        return h.response(err).code(500)
+    }
+}

@@ -27,28 +27,13 @@ module.exports = (server) => {
         {
             method: "PUT",
             path: "/dogs/{id}",
-            handler: async (request, h) => {
-                try {
-                    return await Dog.findByIdAndUpdate(request.params.id,
-                        request.payload,
-                        { new: true }
-                    )
-                } catch (err) {
-                    return h.response(err).code(500)
-                }
-            }
+            handler: dogController.updateDog // Skicka vidare till controller
         },
         // Ta bort hund 
         {
             method: "DELETE",
             path: "/dogs/{id}",
-            handler: async (request, h) => {
-                try {
-                    return await Dog.findByIdAndDelete(request.params.id)
-                } catch (err) {
-                    return h.response(err).code(500)
-                }
-            }
+            handler: dogController.deleteDog // Skicka vidare till controller 
     
         }]
     )

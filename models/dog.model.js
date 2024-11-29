@@ -7,7 +7,7 @@ const dogSchema = Mongoose.Schema(
         breed: String,
         age: Number, 
         description: String,
-        haveMet: Boolean
+        vaccinated: Boolean
     }
 )
 
