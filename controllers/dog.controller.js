@@ -11,6 +11,7 @@ exports.getAllDogs = async (request, h) => {
         }
         return dogs; // Hämta hundar 
     } catch (err) {
+        // Vid fel 
         return h.response(err).code(500);
     }
 };
@@ -21,8 +22,8 @@ exports.getSingleDog = async (request, h) => {
         const dog = await Dog.findById(request.params.id)
         return dog || h.response("hittades inte").code(404); // Returnera hund eller felmeddelande om hunden inte finns
     } catch (err) {
-        // Om felaktigt id anges
-        return h.response({ message: "Något gick fel, kontrollera angivet id." }).code(500)
+        // Vid fel 
+        return h.response(err).code(500);
     }
 };
 
@@ -39,7 +40,7 @@ exports.addDog = async (request, h) => {
         const dog = new Dog(request.payload);
         return await dog.save();
     } catch (err) {
-        // Övriga fel 
+        // Vid fel 
         return h.response(err).code(500);
     }
 };
@@ -58,18 +59,18 @@ exports.updateDog = async (request, h) => {
             { new: true }
         );
     } catch (err) {
-        // Övriga fel 
-        return h.response(err).code(500)
+        // Vid fel 
+        return h.response(err).code(500);
     }
 };
 
 // Funktion för att ta bort hund 
 exports.deleteDog = async (request, h) => {
     try {
-        // Ta bort hund och returnera meddelande
-        return await Dog.findByIdAndDelete(request.params.id) && h.response("Hunden togs bort").code(200);
+        // Ta bort hund 
+        return await Dog.findByIdAndDelete(request.params.id)
     } catch (err) {
-        // Vid felaktigt id  
-        return h.response({ message: "Något gick fel, kontrollera angivet id." }).code(500)
+        // Vid fel  
+        return h.response(err).code(500);
     }
 };

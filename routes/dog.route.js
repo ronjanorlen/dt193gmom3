@@ -1,5 +1,5 @@
 const dogController = require("../controllers/dog.controller"); // Inkludera controller 
-const { dogValidation } = require("../validation/dog.validation"); // Inkludera valideringsscheman 
+const { dogValidation, idValidation } = require("../validation/dog.validation"); // Inkludera valideringsscheman 
 
 
 module.exports = (server) => {
@@ -14,7 +14,15 @@ module.exports = (server) => {
         {
             method: "GET",
             path: "/dogs/{id}",
-            handler: dogController.getSingleDog // Skicka vidare till controller 
+            handler: dogController.getSingleDog, // Skicka vidare till controller 
+            options: {
+                validate: {
+                    params: idValidation, // idkontroll
+                    failAction: (request, h, err) => {
+                        throw err;
+                    }
+                }
+            }
         },
     
         // Lägg till hund
@@ -24,11 +32,12 @@ module.exports = (server) => {
             handler: dogController.addDog, // Skicka vidare till controller
             options: {
                 validate: {
-                    payload: dogValidation, // Kontrollera schema för data
-                    failAction: (request, h, err) =>  // Om fel uppstår
-                        h.response({ message: err.message }).code(400).takeover(), // Skicka info om felaktig/data fattas
-                },
-            },
+                    payload: dogValidation, 
+                    failAction: (request, h, err) => {
+                        throw err;
+                    }
+                }
+            }
         }, 
     
         // Uppdatera hund
@@ -38,17 +47,27 @@ module.exports = (server) => {
             handler: dogController.updateDog, // Skicka vidare till controller
             options: {
                 validate: {
-                    payload: dogValidation, // Kontrollera schema för data 
-                    failAction: (request, h, err) =>  // Om fel uppstår
-                        h.response({ message: err.message }).code(400).takeover(), // Skicka info om felaktig/data fattas
-                },
-            },
+                    payload: dogValidation, 
+                    params: idValidation, // idkontroll
+                    failAction: (request, h, err) => {
+                        throw err;
+                    }
+                }
+            }
         },
         // Ta bort hund 
         {
             method: "DELETE",
             path: "/dogs/{id}",
-            handler: dogController.deleteDog // Skicka vidare till controller 
+            handler: dogController.deleteDog, // Skicka vidare till controller 
+            options: {
+                validate: {
+                    params: idValidation, // idkontroll
+                    failAction: (request, h, err) => {
+                        throw err;
+                    }
+                }
+            }
     
         }]
     )

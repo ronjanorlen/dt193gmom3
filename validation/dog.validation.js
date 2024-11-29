@@ -1,5 +1,12 @@
 const Joi = require('joi'); // inkludera joi
 
+// Validering för id från MongoDB
+const idValidation = Joi.object(
+    {
+        id: Joi.string().length(24).required()
+    }
+);
+
 // Valideringsschema  
 const dogValidation = Joi.object(
     {
@@ -12,4 +19,4 @@ const dogValidation = Joi.object(
     }
 );
 
-module.exports = { dogValidation }; // Exportera valideringsschema
+module.exports = { idValidation, dogValidation }; // Exportera valideringsschema
