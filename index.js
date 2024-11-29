@@ -9,8 +9,8 @@ const init = async () => {
 
     // Initiera server
     const server = Hapi.server({
-        port: 5000, // Ändra till 5000 för backend
-        host: 'localhost'
+        port: process.env.PORT || 5000, // Ändra till 5000 för backend
+        host: '0.0.0.0' // Hitta anslutning från extern ip-adress
     });
 
     // Anslut till MongoDB
