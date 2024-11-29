@@ -1,5 +1,4 @@
 const dogController = require("../controllers/dog.controller"); // Inkludera controller 
-// const Joi = require('joi'); // inkludera joi 
 const { dogValidation } = require("../validation/dog.validation"); // Inkludera valideringsscheman 
 
 
@@ -25,9 +24,9 @@ module.exports = (server) => {
             handler: dogController.addDog, // Skicka vidare till controller
             options: {
                 validate: {
-                    payload: dogValidation, // validera schemat
-                    failAction: (request, h, err) => 
-                        h.response({ message: err.message }).code(400).takeover(),
+                    payload: dogValidation, // Kontrollera schema för data
+                    failAction: (request, h, err) =>  // Om fel uppstår
+                        h.response({ message: err.message }).code(400).takeover(), // Skicka info om felaktig/data fattas
                 },
             },
         }, 
@@ -39,9 +38,9 @@ module.exports = (server) => {
             handler: dogController.updateDog, // Skicka vidare till controller
             options: {
                 validate: {
-                    payload: dogValidation,
-                    failAction: (request, h, err) => 
-                        h.response({ message: err.message }).code(400).takeover(),
+                    payload: dogValidation, // Kontrollera schema för data 
+                    failAction: (request, h, err) =>  // Om fel uppstår
+                        h.response({ message: err.message }).code(400).takeover(), // Skicka info om felaktig/data fattas
                 },
             },
         },

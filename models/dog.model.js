@@ -1,4 +1,3 @@
-const { string } = require("joi");
 const Mongoose = require("mongoose"); // Inkludera mongoose
 
 // Schema för hundar
