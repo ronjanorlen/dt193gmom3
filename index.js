@@ -13,8 +13,7 @@ const init = async () => {
         host: '0.0.0.0', // Hitta anslutning från extern ip-adress
         routes: {
             cors: {
-                origin: ['http://localhost:5173'], ///Tillåt Vue-frontend
-                credentials: true // Tillåt cookies om det behövs
+                origin: ['*'] ///Tillåt alla CORS-anrop
             }
         }
     });
